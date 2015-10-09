@@ -17,14 +17,16 @@
 #include <string.h>
 
 
+#ifdef USE_MKL
 #include "mkl_cblas.h"
 #include "mkl_blas.h"
 #include "mkl.h"
-#include "./functionsPIRWLS/cholesky.h"
-#include "./functionsPIRWLS/cholesky.c"
-#include "./functionsPIRWLS/tools.h"
+#else
+#include "cblas.h"
+#endif
+
+
 #include "./functionsPIRWLS/tools.c"
-#include "./functionsPIRWLS/kernels.h"
 #include "./functionsPIRWLS/kernels.c"
 
 
