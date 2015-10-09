@@ -19,14 +19,17 @@
 #include <string.h>
 
 
+#ifdef USE_MKL
 #include "mkl_cblas.h"
 #include "mkl_blas.h"
 #include "mkl.h"
+#else
+#include "cblas.h"
+#endif
+
 #include "./functionsPIRWLS/ParallelAlgorithms.h"
 #include "./functionsPIRWLS/ParallelAlgorithms.c"
-#include "./functionsPIRWLS/tools.h"
 #include "./functionsPIRWLS/tools.c"
-#include "./functionsPIRWLS/kernels.h"
 #include "./functionsPIRWLS/kernels.c"
 
 
