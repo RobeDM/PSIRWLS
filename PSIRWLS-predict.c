@@ -26,8 +26,8 @@
 #endif
 
 
-#include "./functionsPIRWLS/tools.c"
-#include "./functionsPIRWLS/kernels.c"
+#include "./functionsPSIRWLS/tools.c"
+#include "./functionsPSIRWLS/kernels.c"
 
 
 
