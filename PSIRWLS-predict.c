@@ -55,7 +55,7 @@ double *test(svm_dataset dataset, model mymodel,predictProperties props){
             if(predictions[i]>0 & dataset.y[i]>0) aciertos++;
             if(predictions[i]<=0 & dataset.y[i]<=0) aciertos++;
         }
-    printf("Accuracy: %f\n",aciertos/total);
+        printf("Accuracy: %f\n",aciertos/total);
     }
     
     return predictions;
