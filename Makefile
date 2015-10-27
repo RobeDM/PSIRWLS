@@ -10,7 +10,7 @@ ifeq ($(USE_MKL),1)
 	INCLUDEPATH = -I/opt/intel/composerxe-2013.1.106/mkl/include/
 	LIBRARYPATH = -L/opt/intel/composerxe-2013.1.106/mkl/lib/intel64/
 else
-	LIBS = -fopenmp -lcblas -lm -llapack
+	LIBS = -fopenmp -lcblas -lblas -lm -llapack
 endif
 
 all: PSIRWLS-predict PSIRWLS-train
