@@ -238,16 +238,21 @@ int* SGMA(svm_dataset dataset,properties props){
 
     }
     
+    if(size>=2){
+        for(i=0;i<64;i++){
+    	    free(KNC[i]);
+    	    free(KSM[i]);
+    	    free(eta[i]);
+    	    free(Z[i]);
+        }
+    }
+    
+    free(KNC)
+    free(KSM)
+    free(eta);
+    free(Z);
 
-
-/*
-    double **KNC = (double **) malloc(64*sizeof(double *));	
-    double **KSM = (double **) malloc(64*sizeof(double *));	
-    double *eta=(double *) malloc(64*sizeof(double));	
-    double *KSC = (double *) malloc((dataset.l)*(props.size)*sizeof(double));	
-    double **Z = (double **) malloc(64*sizeof(double *));	
-*/
-
+    free(KSC);
     free(iKC);	
     free(invKC);	
     free(iKCTmp);	
