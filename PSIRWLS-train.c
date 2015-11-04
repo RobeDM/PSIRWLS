@@ -237,6 +237,27 @@ int* SGMA(svm_dataset dataset,properties props){
         ++size;
 
     }
+    
+
+
+/*
+    double **KNC = (double **) malloc(64*sizeof(double *));	
+    double **KSM = (double **) malloc(64*sizeof(double *));	
+    double *eta=(double *) malloc(64*sizeof(double));	
+    double *KSC = (double *) malloc((dataset.l)*(props.size)*sizeof(double));	
+    double **Z = (double **) malloc(64*sizeof(double *));	
+*/
+
+    free(iKC);	
+    free(invKC);	
+    free(iKCTmp);	
+    free(invKCTmp);	
+    free(L2);	
+    free(IL2);	    
+    
+    free(indexes);
+    free(descE);	
+    
     return centroids;
 }
 
