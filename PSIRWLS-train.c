@@ -242,7 +242,6 @@ int* SGMA(svm_dataset dataset,properties props){
         for(i=0;i<64;i++){
     	    free(KNC[i]);
     	    free(KSM[i]);
-    	    free(eta[i]);
     	    free(Z[i]);
         }
     }
