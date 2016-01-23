@@ -745,7 +745,7 @@ void getSubMatrix(double *matrix,int size1,int size2,int O1,int O2,double *A, in
 	
 	int j;	
 	for(j=0;j<size4;j++){
-		//printf("En A posicion %d guardo lo de matrix posicion %d de tamaÒo %d\n",j*size3,(j+O2)*size1+O1,size3);
+		//printf("En A posicion %d guardo lo de matrix posicion %d de tamaÃ’o %d\n",j*size3,(j+O2)*size1+O1,size3);
 			memcpy(&A[j*size3],&matrix[(j+O2)*size1+O1],size3*sizeof(double));
 	}	
 }
