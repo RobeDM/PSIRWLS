@@ -46,8 +46,10 @@ If you use MKL libraries:
 
 
 If the libraries are not installed in the standard paths you can uncomment and edit the following variables:
- INCLUDEPATH to tell the cblas.h file
- LIBRARYPATH to tell the linear algebra libraries location.
+
+ **INCLUDEPATH** to tell the cblas.h file
+ 
+ **LIBRARYPATH** to tell the linear algebra libraries location.
 
 
 Running the code:
