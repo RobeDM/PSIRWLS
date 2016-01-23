@@ -155,27 +155,26 @@ predictProperties PredictParameters(int* argc, char*** argv) {
 }
 
 
-
 svm_dataset readTrainFile(char filename[]){
 
     svm_dataset dataset;
-
+	
     int arraysize=256;
 
     char *endptr;
     char *idx, *val, *label;
 
-
+  	
     if (filename == NULL){
         fprintf(stderr, "File not specified");
         exit(2);
     }
-
+		
     FILE* file = fopen(filename, "r");
     if (file == NULL) {
         fprintf(stderr, "File not found: %s\n",filename);
         exit(2);
-    }
+    }	
 
     char fileline[100000];
 
@@ -195,7 +194,7 @@ svm_dataset readTrainFile(char filename[]){
             idx = strtok(NULL,":");
             p = strtok(NULL," \t");
             if(p == NULL || *p == '\n') break;
-            else{
+            else{    
                 index = (int) strtol(idx,&endptr,10);
                 if(index>maxindexDS) maxindexDS=index;
             }
@@ -214,7 +213,7 @@ svm_dataset readTrainFile(char filename[]){
     double sumNegatives=0.0;
 
     rewind(file);
-
+    
     dataset.y = (double *) calloc(dataset.l+2,sizeof(double));
     dataset.quadratic_value = (double *) calloc(dataset.l+2,sizeof(double));
     dataset.x = (svm_sample **) calloc(dataset.l+2,sizeof(svm_sample *));
@@ -227,7 +226,7 @@ svm_dataset readTrainFile(char filename[]){
     int errno;
 
 
-   for(i=0;i<dataset.l;i++){
+    for(i=0;i<dataset.l;i++){
 
         inst_max_index = -1;
         if (fgets(fileline, 100000, file)== NULL){
@@ -236,7 +235,7 @@ svm_dataset readTrainFile(char filename[]){
         }
 
         dataset.x[i] = &features[j];
-            label = strtok(fileline," \t\n");
+	    label = strtok(fileline," \t\n");
 
         if(label == NULL){
             fprintf(stderr, "Wrong file format\n");
@@ -273,6 +272,7 @@ svm_dataset readTrainFile(char filename[]){
             if(features[dm].index != features[j].index){
                 dataset.sparse=1;
             }
+
             errno = 0;
             features[j].value = strtod(val,&endptr);
 
@@ -310,9 +310,11 @@ svm_dataset readTrainFile(char filename[]){
             ++j;
         }
     }
-
+    
     features[j].index = -1;
     ++j;
+
+
     dataset.y[dataset.l+1]=-1.0;
     dataset.x[dataset.l+1] = &features[j];
     for (i=0;i<=maxindexDS;i++){
@@ -323,7 +325,7 @@ svm_dataset readTrainFile(char filename[]){
             ++j;
         }
     }
-
+    
     features[j].index = -1;
     ++j;
 
@@ -357,8 +359,7 @@ svm_dataset readUnlabeledFile(char filename[]){
     dataset.sparse = 0;
 
     while (fgets(fileline, 100000, file) != NULL){
-        char *p = strtok(fileline," \t");
-        ++elements;
+        char *p;
 
         while(1){
             p = strtok(NULL," \t");
@@ -366,7 +367,6 @@ svm_dataset readUnlabeledFile(char filename[]){
             ++elements;
         }
         ++elements;
-        
         ++dataset.l;
     }
 
@@ -385,6 +385,7 @@ svm_dataset readUnlabeledFile(char filename[]){
     int inst_max_index;
     int errno;
 
+
     for(i=0;i<dataset.l;i++){
 
         inst_max_index = -1;
@@ -394,42 +395,31 @@ svm_dataset readUnlabeledFile(char filename[]){
         }
 
         dataset.x[i] = &features[j];
-
-        dataset.y[i] = 0;
-
         dm = 0;
-
-        idx = strtok(fileline,":");
-        val = strtok(NULL," \t");
-
         while(1){
+            idx = strtok(NULL,":");
+            val = strtok(NULL," \t");
 
             if(val == NULL) break;
 
+            errno = 0;
             features[j].index = (int) strtol(idx,&endptr,10);
-
-            if(endptr == idx || *endptr != '\0' || features[j].index <= inst_max_index){
+            if(endptr == idx || errno != 0 || *endptr != '\0' || features[j].index <= inst_max_index){
                 fprintf(stderr, "Wrong file format\n");
                 exit(2);
             }else{
                 inst_max_index = features[j].index;
             }
-
             if(features[dm].index != features[j].index){
                 dataset.sparse=1;
             }
-
+            errno = 0;
             features[j].value = strtod(val,&endptr);
             dataset.quadratic_value[i] += pow(strtod(val,&endptr),2);
-
-            if(endptr == val ||  (*endptr != '\0' && !isspace(*endptr))){
+            if(endptr == val || errno != 0 || (*endptr != '\0' && !isspace(*endptr))){
                 fprintf(stderr, "Wrong file format\n");
                 exit(2);
             }
-
-            idx = strtok(NULL,":");
-            val = strtok(NULL," \t");
-
             ++dm;
             ++j;
         }
@@ -437,7 +427,6 @@ svm_dataset readUnlabeledFile(char filename[]){
         if(inst_max_index > max_index){
             max_index = inst_max_index;
         }
-
         features[j++].index = -1;
 
     }
@@ -480,7 +469,7 @@ void readModel(model * mod, FILE *Input){
 
     mod->x[0]=&features[0];    
     int iterSV=1;
-    for(aux=0;aux<(mod->nElem);aux++){
+    for(aux=1;aux<(mod->nElem);aux++){
         if (features[aux].index == -1){
             if(iterSV<mod->nSVs) mod->x[iterSV]=&features[aux+1];
             ++iterSV;
