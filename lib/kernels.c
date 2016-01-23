@@ -73,5 +73,7 @@ double kernelTest(svm_dataset dataset, int index1, model mymodel, int index2){
     }
 
     return exp(-(mymodel.Kgamma)*sum);
+
+	
 }
 
